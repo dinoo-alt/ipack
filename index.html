@@ -1,747 +1,275 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<!-- Verbindung zum Manifest -->
-<link rel="manifest" href="manifest.json">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPack – Dein smarter Rucksack-Planer</title>
+    
+    <!-- 🌟 GOOGLE ADSENSE AKTIVIERUNG FÜR DIE DOWNLOAD-SEITE -->
+    <script async src="https://googlesyndication.com"
+         crossorigin="anonymous"></script>
 
-<!-- iOS Einstellungen für den App-Modus -->
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="IPack">
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --accent-color: #4cd964; /* Passend zum Mint-Theme */
+            --text-color: white;
+            --text-muted: #aaa;
+        }
 
-<!-- Das App-Icon für das iPhone -->
-<link class="apple-touch-icon" href="Pack.png">
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            text-align: center;
+        }
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        .hero {
+            padding: 60px 20px 40px;
+            background: linear-gradient(180deg, #1a3c22 0%, var(--bg-color) 100%);
+        }
 
-<title>🎒 Rucksack-Planer</title>
+        .logo {
+            font-size: 70px;
+            margin: 0;
+        }
 
-<!-- 🌟 GOOGLE ADSENSE AKTIVIERUNGS-CODE -->
-<script async src="https://googlesyndication.com"
-     crossorigin="anonymous"></script>
+        h1 {
+            font-size: 32px;
+            margin: 10px 0;
+            font-weight: 800;
+        }
 
-<style>
-/* Theme Variablen */
-:root {
-    --bg-color: #121212;
-    --card-bg: #1e1e1e;
-    --item-bg: #292929;
-    --text-color: white;
-    --text-muted: #aaa;
-    --accent-color: #007aff;
-    --green-color: #4cd964;
-    --red-color: #ff453a;
-    --yellow-color: #ffcc00;
-}
-
-[data-theme="neon"] {
-    --bg-color: #0b0114;
-    --card-bg: #160226;
-    --item-bg: #26053b;
-    --text-color: #00ffff;
-    --text-muted: #bd93f9;
-    --accent-color: #ff007f;
-    --green-color: #39ff14;
-    --red-color: #ff073a;
-    --yellow-color: #ffee00;
-}
-
-[data-theme="light"] {
-    --bg-color: #f0f4f2;
-    --card-bg: #ffffff;
-    --item-bg: #e8f0ec;
-    --text-color: #1c2e24;
-    --text-muted: #5c7568;
-    --accent-color: #00a86b;
-    --green-color: #10b981;
-    --red-color: #ef4444;
-    --yellow-color: #f59e0b;
-}
-
-* {
-    box-sizing: border-box;
-    transition: background 0.3s, color 0.3s, border-color 0.3s;
-}
-
-body {
-    margin: 0;
-    padding: 20px;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: var(--bg-color);
-    color: var(--text-color);
-}
-
-.container {
-    max-width: 430px;
-    margin: auto;
-}
-
-.card {
-    background: var(--card-bg);
-    padding: 22px;
-    border-radius: 18px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.35);
-}
-
-#loginBereich {
-    display: block;
-}
-
-h1 {
-    text-align: center;
-    font-size: 25px;
-    margin: 5px 0 8px;
-}
-</style>
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 16px;
+            max-width: 320px;
+            margin: 0 auto 30px;
+            line-height: 1.4;
+        }
+    </style>
 </head>
 <style>
-.subtitle {
-    text-align: center;
-    color: var(--text-muted);
-    font-size: 14px;
-    margin-bottom: 25px;
-}
+        .btn-download {
+            display: inline-block;
+            background: var(--accent-color);
+            color: #051409;
+            padding: 16px 32px;
+            border-radius: 14px;
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: none;
+            box-shadow: 0 6px 20px rgba(76, 217, 100, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
 
-.eingabe {
-    margin-bottom: 16px;
-}
+        .btn-download:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 25px rgba(76, 217, 100, 0.4);
+        }
 
-.eingabe label {
-    display: block;
-    text-align: left;
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-bottom: 7px;
-}
+        .container {
+            max-width: 430px;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
 
-input, select {
-    width: 100%;
-    padding: 14px;
-    border-radius: 10px;
-    border: 1px solid #444;
-    background: var(--item-bg);
-    color: var(--text-color);
-    font-size: 15px;
-    outline: none;
-}
+        .section-title {
+            font-size: 20px;
+            text-align: left;
+            margin: 30px 0 15px;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
 
-input:focus, select:focus {
-    border-color: var(--accent-color);
-}
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            text-align: left;
+        }
 
-.login-button {
-    width: 100%;
-    margin-top: 5px;
-    padding: 14px;
-    border: none;
-    border-radius: 10px;
-    background: var(--accent-color);
-    color: white;
-    font-size: 15px;
-    font-weight: bold;
-    cursor: pointer;
-}
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
 
-.manuell-button {
-    width: 100%;
-    margin-top: 9px;
-    padding: 11px;
-    border: none;
-    border-radius: 10px;
-    background: var(--item-bg);
-    color: var(--text-muted);
-    font-size: 14px;
-    cursor: pointer;
-}
+        .step:last-child {
+            margin-bottom: 0;
+        }
+</style>
+<style>
+        .step-num {
+            background: #292929;
+            color: var(--accent-color);
+            font-weight: bold;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 14px;
+        }
 
-#loginStatus {
-    text-align: center;
-    min-height: 20px;
-    margin-top: 15px;
-    font-size: 14px;
-}
+        .step-text b {
+            display: block;
+            font-size: 15px;
+            margin-bottom: 3px;
+        }
 
-#appBereich, #manuellBereich {
-    display: none;
-}
+        .step-text span {
+            color: var(--text-muted);
+            font-size: 13px;
+            line-index: 1.3;
+        }
 
-.status {
-    text-align: center;
-    padding: 9px;
-    margin-bottom: 17px;
-    border-radius: 8px;
-    background: var(--item-bg);
-    color: var(--green-color);
-    font-size: 12px;
-}
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
 
-.tag-navigation {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 8px;
-}
+        .feature-box {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 13px;
+        }
 
-.nav-button {
-    width: 45px;
-    height: 45px;
-    padding: 0;
-    border: none;
-    border-radius: 10px;
-    background: var(--item-bg);
-    color: var(--text-color);
-    font-size: 21px;
-    cursor: pointer;
-}
-
-.tag-mitte {
-    flex: 1;
-    text-align: center;
-}
-
-.tag-name {
-    font-size: 21px;
-    font-weight: bold;
-}
-
-.datum {
-    margin-top: 4px;
-    color: var(--text-muted);
-    font-size: 13px;
-}
-
-.hinweis {
-    text-align: center;
-    margin-bottom: 18px;
-    color: var(--text-muted);
-    font-size: 13px;
-}
-
-.section {
-    margin-top: 14px;
-    padding: 15px;
-    border-radius: 12px;
-    background: var(--item-bg);
-    text-align: left;
-}
-
-.section h2 {
-    margin: 0 0 10px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #444;
-    font-size: 16px;
-}
-
-.rein h2 { color: var(--green-color); }
-.ausfall h2 { color: var(--red-color); }
-.vertretung h2 { color: var(--yellow-color); }
-
-ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-li {
-    padding: 11px 8px;
-    border-bottom: 1px solid #383838;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.li-content {
-    flex: 1;
-}
-
-.fach {
-    font-size: 15px;
-    font-weight: bold;
-}
-
-.lehrer {
-    margin-top: 4px;
-    color: var(--text-muted);
-    font-size: 13px;
-}
-
-.pack-check {
-    width: 22px;
-    height: 22px;
-    accent-color: var(--green-color);
-    cursor: pointer;
-}
-
-.eingepackt {
-    opacity: 0.4;
-}
-
-.eingepackt .fach {
-    text-decoration: line-through;
-}
-
-.ausfall-eintrag {
-    background: rgba(255, 69, 58, 0.12) !important;
-    border-left: 4px solid var(--red-color);
-    text-decoration: line-through;
-    color: var(--text-muted) !important;
-    border-radius: 6px;
-}
-
-.ausfall-label {
-    text-decoration: none;
-    display: inline-block;
-    color: var(--red-color);
-    font-weight: bold;
-    font-size: 12px;
-    margin-top: 4px;
-}
-
-.sport-warnbox {
-    background: rgba(255, 204, 0, 0.15) !important;
-    border: 2px dashed var(--yellow-color);
-    border-radius: 10px;
-    padding: 10px;
-    margin-bottom: 10px;
-    font-size: 13px;
-    color: var(--text-color);
-}
-
-.vertretung-eintrag {
-    background: rgba(255, 204, 0, 0.14);
-    border-left: 4px solid var(--yellow-color);
-    border-radius: 8px;
-    margin-bottom: 6px;
-}
-
-.vertretung-label {
-    display: inline-block;
-    padding: 3px 7px;
-    border-radius: 5px;
-    background: var(--yellow-color);
-    color: #000;
-    font-size: 10px;
-    font-weight: bold;
-    margin-bottom: 4px;
-}
-
-.leer {
-    color: #777;
-    font-style: italic;
-    text-align: center;
-    display: block;
-    width: 100%;
-}
-
-.abmelden {
-    width: 100%;
-    margin-top: 18px;
-    padding: 13px;
-    border: none;
-    border-radius: 10px;
-    background: var(--item-bg);
-    color: var(--text-muted);
-    cursor: pointer;
-}
-
-.manuell-tag {
-    margin-top: 14px;
-    padding: 15px;
-    border-radius: 12px;
-    background: var(--item-bg);
-}
-
-.manuell-tag h2 {
-    margin: 0 0 10px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #444;
-    font-size: 16px;
-}
-
-.fach-eingabe {
-    margin-top: 8px;
-}
-
-.theme-box {
-    margin-top: 15px;
-    border-top: 1px solid #383838;
-    padding-top: 12px;
-}
+        .feature-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
 </style>
 
 <body>
-<div class="container">
 
-<div id="loginBereich" class="card">
-    <h1>🎒 Rucksack-Planer</h1>
-    <div class="subtitle">Deine Schulsachen automatisch aus Untis</div>
-
-    <div class="eingabe">
-        <label>🏫 Schule</label>
-        <input id="schule" type="text" placeholder="Deine Schule">
+    <!-- HERO / OBEN -->
+    <div class="hero">
+        <p class="logo">🎒</p>
+        <h1>IPack</h1>
+        <div class="subtitle">Vergiss nie wieder deine Mappen. Dein Stundenplan weiß genau, was rein muss!</div>
+        <!-- 🔗 LINK ZUR EIGENTLICHEN APP -->
+        <a href="app.html" class="btn-download">Jetzt App öffnen 🚀</a>
     </div>
-    <div class="eingabe">
-        <label>👤 Benutzername</label>
-        <input id="benutzername" type="text" placeholder="Untis Benutzername">
-    </div>
-    <div class="eingabe">
-        <label>🔒 Passwort</label>
-        <input id="passwort" type="password" placeholder="Untis Passwort">
-    </div>
+    <div class="container">
 
-    <button class="login-button" onclick="anmelden()">Anmelden</button>
-    <button class="manuell-button" onclick="manuellStarten()">Manuell starten</button>
-    <div id="loginStatus"></div>
-</div>
-<div id="manuellBereich" class="card">
-    <h1>🎒 Manueller Stundenplan</h1>
-    <div class="subtitle">Trage deinen Stundenplan selbst ein.</div>
-    <div id="manuellTage"></div>
-    <button class="login-button" style="margin-top:15px;" onclick="manuellSpeichern()">Stundenplan speichern</button>
-    <button class="manuell-button" onclick="zurueckZumLogin()">Zurück</button>
-</div>
-
-<div id="appBereich" class="card">
-    <h1>🎒 Rucksack-Planer</h1>
-    <div id="appStatus" class="status">🟢 Stundenplan geladen</div>
-
-    <div class="tag-navigation">
-        <button class="nav-button" onclick="vorherigerTag()">←</button>
-        <div class="tag-mitte">
-            <div id="tagAnzeige" class="tag-name">Für Freitag</div>
-            <div id="datumAnzeige" class="datum">28.08.2026</div>
+        <!-- GOOGLE WERBUNG OBEN -->
+        <div style="margin: 15px 0; text-align: center;">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-DEINE_PARTNER_ID"
+                 data-ad-slot="DEINE_ANZEIGEN_ID"
+                 data-ad-format="auto"
+                 full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
-        <button class="nav-button" onclick="naechsterTag()">→</button>
-    </div>
 
-    <div id="hinweisText" class="hinweis">🎒 Das musst du für Freitag einpacken:</div>
+        <!-- ANLEITUNG IPHONE -->
+        <div class="section-title">📱 Installation auf dem iPhone</div>
+        <div class="card">
+            <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-text">
+                    <b>Öffne Safari</b>
+                    <span>Rufe diese Seite im Safari-Browser auf deinem iPhone auf.</span>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-text">
+                    <b>Tippe auf Teilen</b>
+                    <span>Drücke unten in der Leiste auf das Viereck mit dem Pfeil nach oben.</span>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-text">
+                    <b>Zum Home-Bildschirm</b>
+                    <span>Scrolle nach unten und wähle "Zum Home-Bildschirm hinzufügen".</span>
+                </div>
+            </div>
+        </div>
+        <!-- ANLEITUNG ANDROID -->
+        <div class="section-title">🤖 Installation auf Android</div>
+        <div class="card">
+            <div class="step">
+                <div class="step-num">1</div>
+                <div class="step-text">
+                    <b>Öffne Google Chrome</b>
+                    <span>Besuche diese Website mit dem Chrome-Browser auf deinem Handy.</span>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <div class="step-text">
+                    <b>Menü öffnen</b>
+                    <span>Tippe oben rechts auf die drei kleinen Punkte.</span>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <div class="step-text">
+                    <b>App installieren</b>
+                    <span>Wähle im Menü den Punkt "App installieren" oder "Zum Startbildschirm".</span>
+                </div>
+            </div>
+        </div>
 
-    <div class="section rein">
-        <h2>📥 Muss mit / Bleibt drin</h2>
-        <div id="sportSpezialBox"></div>
-        <ul id="mussMitListe"></ul>
-    </div>
+        <!-- COOLNESS FEATURES -->
+        <div class="section-title">✨ Das kann IPack</div>
+        <div class="feature-grid">
+            <div class="feature-box">
+                <div class="feature-icon">Untis</div>
+                <b>Automatischer Abruf</b>
+                <p style="margin:5px 0 0; color:var(--text-muted);">Verbindet sich sicher mit deinem Stundenplan.</p>
+            </div>
+            <div class="feature-box">
+                <div class="feature-icon">🎨</div>
+                <b>Custom Themes</b>
+                <p style="margin:5px 0 0; color:var(--text-muted);">Wähle zwischen iOS Dark, Neon oder Mint.</p>
+            </div>
+        </div>
+        <div class="feature-grid" style="margin-top: 12px;">
+            <div class="feature-box">
+                <div class="feature-icon">🔊</div>
+                <b>Pack-Sounds</b>
+                <p style="margin:5px 0 0; color:var(--text-muted);">Interaktives Feedback mit coolen Zipp-Geräuschen.</p>
+            </div>
+            <div class="feature-box">
+                <div class="feature-icon">👟</div>
+                <b>Taschen-Warner</b>
+                <p style="margin:5px 0 0; color:var(--text-muted);">Vergiss nie wieder deine Sport- oder Schwimmsachen.</p>
+            </div>
+        </div>
 
-    <div class="section vertretung">
-        <h2>🟢 Vertretungen</h2>
-        <ul id="vertretungsListe"></ul>
-    </div>
+        <!-- GOOGLE WERBUNG UNTEN -->
+        <div style="margin: 30px 0 15px; text-align: center;">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-DEINE_PARTNER_ID"
+                 data-ad-slot="DEINE_ANZEIGEN_ID"
+                 data-ad-format="auto"
+                 full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
 
-    <div class="section ausfall">
-        <h2>❌ Fällt aus</h2>
-        <ul id="ausfallListe"></ul>
-    </div>
+        <p style="font-size: 11px; color: var(--text-muted); margin-top: 40px; margin-bottom: 20px;">
+            © 2026 IPack. Entwickelt für Schüler. Komplett ohne Datenspeicherung.
+        </p>
 
-    <div class="theme-box">
-        <label style="font-size: 12px; color: var(--text-muted); display:block; margin-bottom:5px;">🎨 App Design wählen:</label>
-        <select id="themeSelect" onchange="changeTheme(this.value)">
-            <option value="dark">iOS Dark</option>
-            <option value="neon">Midnight Neon 🌌</option>
-            <option value="light">Light Mint 🌿</option>
-        </select>
-    </div>
+    </div> <!-- Container Ende -->
 
-    <!-- 🌟 GOOGLE ADSENSE WERBEBANNER (Hier eingefügt!) -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9964948454613974"
-     crossorigin="anonymous"></script>
-<!-- pub-9964948454613974 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-9964948454613974"
-     data-ad-slot="8167034083"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-    </div>
-
-    <button class="abmelden" onclick="abmelden()">Abmelden</button>
-</div>
-
-</div>
-
-<!-- ==================== JAVASCRIPT LOGIK ==================== -->
-<script>
-const mappenRegeln = {
-    "Mathe": "Blauer Ordner",
-    "Deutsch": "Roter Schnellhefter",
-    "Englisch": "Gelbe Mappe",
-    "Chemie": "Hellblaue Mappe",
-    "Religion": "Lila Mappe",
-    "Geschichte": "Oranger Ordner",
-    "Niederländisch": "Pinke Mappe",
-    "Biologie": "Grüne Mappe",
-    "Erdkunde": "Braune Mappe",
-    "Sport": "Keine Mappe",
-    "Schwimmen": "Keine Mappe",
-    "Kunst": "Keine Mappe",
-    "Projekt": "Keine Mappe"
-};
-
-const demoStundenplan = {
-    "Montag": [
-        { fach: "Deutsch", lehrer: "Hr. Müller", status: "normal" },
-        { fach: "Mathe", lehrer: "Fr. Schmidt", status: "ausfall" },
-        { fach: "Englisch", lehrer: "Mrs. Smith", status: "normal" }
-    ],
-    "Dienstag": [
-        { fach: "Chemie", lehrer: "Hr. Boyle", status: "normal" },
-        { fach: "Sport", lehrer: "Hr. Fit", status: "normal" }
-    ],
-    "Mittwoch": [
-        { fach: "Religion", lehrer: "Fr. Fromm", status: "normal" },
-        { fach: "Geschichte", lehrer: "Hr. Alt", status: "vertretung", vertretungsLehrer: "Fr. Neu" }
-    ],
-    "Donnerstag": [
-        { fach: "Niederländisch", lehrer: "Mevr. de Jong", status: "normal" },
-        { fach: "Kunst", lehrer: "Fr. Pinsel", status: "normal" }
-    ],
-    "Freitag": [
-        { fach: "Biologie", lehrer: "Fr. Bio", status: "normal" },
-        { fach: "Schwimmen", lehrer: "Hr. Platsch", status: "normal" },
-        { fach: "Projekt", lehrer: "Hr. Team", status: "normal" }
-    ]
-};
-
-let aktuellerModus = "demo";
-let gespeicherterPlan = null;
-let wochentage = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag"];
-let aktuellerTagIndex = 0;
-</script>
-<script>
-window.onload = function() {
-    erstelleManuelleEingabefelder();
-    ermittleNaechstenSchultag();
-};
-
-function changeTheme(themeName) {
-    document.documentElement.setAttribute('data-theme', themeName);
-}
-
-function playPackSound() {
-    try {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        let osc1 = audioCtx.createOscillator();
-        let gain1 = audioCtx.createGain();
-        osc1.type = 'triangle';
-        osc1.frequency.setValueAtTime(120, audioCtx.currentTime);
-        osc1.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.08);
-        gain1.gain.setValueAtTime(0.15, audioCtx.currentTime);
-        gain1.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.08);
-        osc1.connect(gain1);
-        gain1.connect(audioCtx.destination);
-        osc1.start();
-        osc1.stop(audioCtx.currentTime + 0.08);
-
-        setTimeout(() => {
-            let osc2 = audioCtx.createOscillator();
-            let gain2 = audioCtx.createGain();
-            osc2.type = 'sine';
-            osc2.frequency.setValueAtTime(600, audioCtx.currentTime);
-            osc2.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.05);
-            gain2.gain.setValueAtTime(0.1, audioCtx.currentTime);
-            gain2.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.05);
-            osc2.connect(gain2);
-            gain2.connect(audioCtx.destination);
-            osc2.start();
-            osc2.stop(audioCtx.currentTime + 0.05);
-        }, 40);
-    } catch(e) {
-        console.log("Audio blockiert.");
-    }
-}
-
-function toggleItem(checkbox) {
-    const li = checkbox.closest('li');
-    if (checkbox.checked) {
-        li.classList.add('eingepackt');
-        playPackSound();
-    } else {
-        li.classList.remove('eingepackt');
-    }
-}
-
-function anmelden() {
-    const status = document.getElementById("loginStatus");
-    status.innerHTML = "<span class='erfolg'>Anmeldung erfolgreich...</span>";
-    setTimeout(() => {
-        aktuellerModus = "demo";
-        document.getElementById("appStatus").innerText = "🟢 Stundenplan geladen (Demo)";
-        document.getElementById("loginBereich").style.display = "none";
-        document.getElementById("appBereich").style.display = "block";
-        zeigeStundenplan();
-    }, 800);
-}
-
-function manuellStarten() {
-    document.getElementById("loginBereich").style.display = "none";
-    document.getElementById("manuellBereich").style.display = "block";
-}
-
-function zurueckZumLogin() {
-    document.getElementById("manuellBereich").style.display = "none";
-    document.getElementById("loginBereich").style.display = "block";
-}
-
-function abmelden() {
-    document.getElementById("appBereich").style.display = "none";
-    document.getElementById("loginBereich").style.display = "block";
-    document.getElementById("loginStatus").innerText = "";
-}
-
-function erstelleManuelleEingabefelder() {
-    const container = document.getElementById("manuellTage");
-    container.innerHTML = "";
-    wochentage.forEach(tag => {
-        const div = document.createElement("div");
-        div.className = "manuell-tag";
-        div.innerHTML = `
-            <h2>${tag}</h2>
-            <select class="stunden-select" onchange="erstelleFaecherInputs('${tag}', this.value)">
-                <option value="0">0 Stunden</option>
-                <option value="4">4 Stunden</option>
-                <option value="6" selected>6 Stunden</option>
-                <option value="8">8 Stunden</option>
-            </select>
-            <div id="inputs-${tag}" class="fach-eingabe"></div>
-        `;
-        container.appendChild(div);
-        erstelleFaecherInputs(tag, 6);
-    });
-}
-
-function erstelleFaecherInputs(tag, anzahl) {
-    const container = document.getElementById(`inputs-${tag}`);
-    container.innerHTML = "";
-    for(let i = 1; i <= anzahl; i++) {
-        container.innerHTML += `<input type="text" style="margin-top:5px;" placeholder="${i}. Stunde - Fach" id="input-${tag}-${i}">`;
-    }
-}
-
-function manuellSpeichern() {
-    gespeicherterPlan = {};
-    wochentage.forEach(tag => {
-        gespeicherterPlan[tag] = [];
-        const inputs = document.querySelectorAll(`[id^="input-${tag}-"]`);
-        inputs.forEach((input) => {
-            if(input.value.trim() !== "") {
-                gespeicherterPlan[tag].push({ fach: input.value.trim(), lehrer: "Manuell", status: "normal" });
-            }
-        });
-    });
-    aktuellerModus = "manuell";
-    document.getElementById("appStatus").innerText = "🔵 Manueller Stundenplan";
-    document.getElementById("manuellBereich").style.display = "none";
-    document.getElementById("appBereich").style.display = "block";
-    zeigeStundenplan();
-}
-
-function ermittleNaechstenSchultag() {
-    let heute = new Date();
-    let tagNummer = heute.getDay();
-    if (tagNummer === 0 || tagNummer === 6) {
-        aktuellerTagIndex = 0;
-    } else {
-        aktuellerTagIndex = tagNummer - 1;
-    }
-}
-
-function vorherigerTag() {
-    aktuellerTagIndex--;
-    if (aktuellerTagIndex < 0) aktuellerTagIndex = 4;
-    zeigeStundenplan();
-}
-
-function naechsterTag() {
-    aktuellerTagIndex++;
-    if (aktuellerTagIndex > 4) aktuellerTagIndex = 0;
-    zeigeStundenplan();
-}
-
-function zeigeStundenplan() {
-    const tag = wochentage[aktuellerTagIndex];
-    const vorherigerTagIndex = aktuellerTagIndex === 0 ? 4 : aktuellerTagIndex - 1;
-    const gesternTag = wochentage[vorherigerTagIndex];
-
-    document.getElementById("tagAnzeige").innerText = `Für ${tag}`;
-    document.getElementById("hinweisText").innerText = `🎒 Das musst du für ${tag} einpacken:`;
-    document.getElementById("datumAnzeige").innerText = "Schultag-Ansicht";
-
-    const plan = aktuellerModus === "demo" ? demoStundenplan : gespeicherterPlan;
-    const facherHeute = plan[gesternTag] || [];
-    const facherMorgen = plan[tag] || [];
-
-    const mussMitListe = document.getElementById("mussMitListe");
-    const vertretungsListe = document.getElementById("vertretungsListe");
-    const ausfallListe = document.getElementById("ausfallListe");
-    const sportBox = document.getElementById("sportSpezialBox");
-
-    mussMitListe.innerHTML = "";
-    vertretungsListe.innerHTML = "";
-    ausfallListe.innerHTML = "";
-    sportBox.innerHTML = "";
-
-    let brauchtSportzeug = false;
-    let brauchtSchwimmzeug = false;
-
-    const aktiveHeute = new Set(facherHeute.filter(f => f.status !== "ausfall").map(f => f.fach));
-    const aktiveMorgen = new Set(facherMorgen.filter(f => f.status !== "ausfall").map(f => f.fach));
-
-    facherMorgen.forEach(stunde => {
-        const mappe = mappenRegeln[stunde.fach] || "Keine Mappe";
-        const li = document.createElement("li");
-
-        if (stunde.fach.toLowerCase() === "sport" && stunde.status !== "ausfall") brauchtSportzeug = true;
-        if (stunde.fach.toLowerCase() === "schwimmen" && stunde.status !== "ausfall") brauchtSchwimmzeug = true;
-
-        if (stunde.status === "ausfall") {
-            li.className = "ausfall-eintrag";
-            li.innerHTML = `<div class="li-content"><div class="fach">📚 ${stunde.fach}</div><div class="lehrer">${stunde.lehrer}</div><span class="ausfall-label">❌ Fällt aus – keine Mappe nötig!</span></div>`;
-            ausfallListe.appendChild(li);
-            return; 
-        }
-
-        if (stunde.status === "vertretung") {
-            li.className = "vertretung-eintrag";
-            li.innerHTML = `<div class="li-content"><span class="vertretung-label">VERTRETUNG</span><div class="fach">🟢 ${stunde.fach}</div><div class="lehrer">Vertretung durch ${stunde.vertretungsLehrer || 'Lehrkraft'}</div></div>`;
-            vertretungsListe.appendChild(li);
-        }
-
-        const checkboxHTML = `<input type="checkbox" class="pack-check" onchange="toggleItem(this)">`;
-
-        if (!aktiveHeute.has(stunde.fach)) {
-            li.innerHTML = `${checkboxHTML}<div class="li-content"><div class="fach">📥 ${stunde.fach}</div><div class="lehrer">${stunde.lehrer}</div><small style="color: var(--green-color); font-weight: bold;">Muss rein: ${mappe}</small></div>`;
-            mussMitListe.appendChild(li);
-        } else {
-            li.innerHTML = `${checkboxHTML}<div class="li-content"><div class="fach">🔄 ${stunde.fach}</div><div class="lehrer">${stunde.lehrer}</div><small style="color: var(--text-muted);">Bleibt drin: ${mappe}</small></div>`;
-            mussMitListe.appendChild(li);
-        }
-    });
-
-    if (brauchtSportzeug) {
-        sportBox.innerHTML = `<div class="sport-warnbox">👟 <b>Sporttasche einpacken!</b><br>Denk an Sportkleidung, Hallenschuhe und Deo.</div>`;
-    }
-    if (brauchtSchwimmzeug) {
-        sportBox.innerHTML = `<div class="sport-warnbox">🩱 <b>Schwimmtasche einpacken!</b><br>Denk an Badebekleidung, Handtuch und Duschgel.</div>`;
-    }
-
-    facherHeute.forEach(stunde => {
-        if (stunde.status !== "ausfall" && !aktiveMorgen.has(stunde.fach)) {
-            const mappe = mappenRegeln[stunde.fach] || "Keine Mappe";
-            const li = document.createElement("li");
-            li.style.borderLeft = "4px solid var(--red-color)";
-            li.innerHTML = `<input type="checkbox" class="pack-check" onchange="toggleItem(this)"><div class="li-content"><div class="fach" style="color: var(--red-color);">📤 ${stunde.fach}</div><small style="color: var(--text-muted);">Muss raus aus dem Rucksack! (${mappe})</small></div>`;
-            mussMitListe.appendChild(li);
-        }
-    });
-
-    if (mussMitListe.children.length === 0) mussMitListe.innerHTML = '<li class="leer">Keine Fächer zu packen!</li>';
-    if (vertretungsListe.children.length === 0) vertretungsListe.innerHTML = '<li class="leer">Keine Vertretungen</li>';
-    if (ausfallListe.children.length === 0) ausfallListe.innerHTML = '<li class="leer">Kein Unterrichtsausfall</li>';
-}
-</script>
 </body>
 </html>
