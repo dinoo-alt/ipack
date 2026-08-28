@@ -1,0 +1,15 @@
+{
+  "name": "IPack",
+  "short_name": "Pack",
+  "start_url": "app.html",
+  "display": "standalone",
+  "background_color": "#1c1c1c",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "Pack.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
